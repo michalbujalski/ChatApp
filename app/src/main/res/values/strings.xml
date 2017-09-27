@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ChatApp</string>
+    <string name="chat_message_send">Send</string>
+    <string name="chat_message_hint">Type your message here</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+</resources>
