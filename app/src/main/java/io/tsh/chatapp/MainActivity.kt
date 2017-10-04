@@ -50,11 +50,13 @@ class MainActivity: AppCompatActivity(), ChatView, AuthView {
             }
         }
         authRepository.attach()
+        chatMessagesRepository.attach()
     }
 
 
     override fun onDestroy() {
         authRepository.detach()
+        chatMessagesRepository.detach()
         super.onDestroy()
     }
 
@@ -81,6 +83,9 @@ class MainActivity: AppCompatActivity(), ChatView, AuthView {
     }
 
     override fun addData(chatMessage: ChatMessage) {
+        fastItemAdapter.add(
+                ChatMessageItem(chatMessage)
+        )
     }
 
     private fun initSignIn() {
