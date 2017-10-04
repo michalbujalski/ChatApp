@@ -13,7 +13,8 @@ import java.util.*
 
 
 class MainActivity: AppCompatActivity(), ChatView, AuthView {
-
+    private var login:MenuItem? = null
+    private var logout:MenuItem? = null
     private val fastItemAdapter= FastItemAdapter<ChatMessageItem>()
 
     private val linearLayoutManager:LinearLayoutManager by lazy{
@@ -42,10 +43,19 @@ class MainActivity: AppCompatActivity(), ChatView, AuthView {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.chat,menu)
+        if( menu!=null) {
+            login = menu.findItem(R.id.login)
+            logout = menu.findItem(R.id.logout)
+        }
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            R.id.login->{
+                initSignIn()
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 
@@ -53,7 +63,18 @@ class MainActivity: AppCompatActivity(), ChatView, AuthView {
     }
 
     private fun initSignIn() {
-
+        startActivity(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setIsSmartLockEnabled(false)
+                        .setAvailableProviders(
+                                Arrays.asList(
+                                        AuthUI.IdpConfig
+                                                .Builder(AuthUI.EMAIL_PROVIDER)
+                                                .build()
+                                ))
+                        .build()
+        )
     }
 
     override fun setAuthenticated(isAuth: Boolean) {
