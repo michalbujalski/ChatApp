@@ -52,6 +52,7 @@ class MainActivity: AppCompatActivity(), ChatView, AuthView {
         if( menu!=null) {
             login = menu.findItem(R.id.login)
             logout = menu.findItem(R.id.logout)
+            setAuthenticated(authRepository.isAuthenticated())
         }
         return true
     }
@@ -80,6 +81,9 @@ class MainActivity: AppCompatActivity(), ChatView, AuthView {
                                 Arrays.asList(
                                         AuthUI.IdpConfig
                                                 .Builder(AuthUI.EMAIL_PROVIDER)
+                                                .build(),
+                                        AuthUI.IdpConfig
+                                                .Builder(AuthUI.GOOGLE_PROVIDER)
                                                 .build()
                                 ))
                         .build()
@@ -87,6 +91,10 @@ class MainActivity: AppCompatActivity(), ChatView, AuthView {
     }
 
     override fun setAuthenticated(isAuth: Boolean) {
+        login?.isVisible = !isAuth
+        logout?.isVisible = isAuth
+        messageET.isEnabled = isAuth
+        sendMessageBtn.isEnabled = isAuth
     }
 
 }

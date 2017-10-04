@@ -6,16 +6,20 @@ import java.util.*
 
 class AuthRepositoryImpl(private val authView:AuthView):AuthRepository {
     private val auth = FirebaseAuth.getInstance()
-
+    private val listener = FirebaseAuth.AuthStateListener{
+        authView.setAuthenticated(isAuthenticated())
+    }
 
     override fun isAuthenticated(): Boolean {
-        return false
+        return auth.currentUser != null
     }
 
     override fun attach() {
+        auth.addAuthStateListener(listener)
     }
 
     override fun detach() {
+        auth.removeAuthStateListener(listener)
     }
 
     override fun logout() {
