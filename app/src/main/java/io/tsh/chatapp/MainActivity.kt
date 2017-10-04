@@ -61,6 +61,9 @@ class MainActivity: AppCompatActivity(), ChatView, AuthView {
             R.id.login->{
                 initSignIn()
             }
+            R.id.logout->{
+                authRepository.logout()
+            }
         }
         return super.onOptionsItemSelected(item)
     }

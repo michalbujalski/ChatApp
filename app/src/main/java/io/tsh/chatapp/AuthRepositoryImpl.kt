@@ -19,5 +19,6 @@ class AuthRepositoryImpl(private val authView:AuthView):AuthRepository {
     }
 
     override fun logout() {
+        auth.signOut();
     }
 }
