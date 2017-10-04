@@ -14,6 +14,13 @@ class ChatMessagesRepositoryImpl(private val chatView: ChatView) : ChatMessagesR
     }
 
     override fun send(message: String) {
+        ref.push().setValue(
+                ChatMessage(
+                        FirebaseAuth.getInstance().currentUser?.displayName ?: "",
+                        message,
+                        System.currentTimeMillis()
+                )
+        )
     }
 
     override fun detach() {

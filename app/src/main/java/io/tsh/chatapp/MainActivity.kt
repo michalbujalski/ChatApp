@@ -19,6 +19,9 @@ class MainActivity: AppCompatActivity(), ChatView, AuthView {
     private val authRepository:AuthRepository by lazy{
         AuthRepositoryImpl(this)
     }
+    private val chatMessagesRepository:ChatMessagesRepository by lazy{
+        ChatMessagesRepositoryImpl(this)
+    }
 
     private val linearLayoutManager:LinearLayoutManager by lazy{
         LinearLayoutManager(this)
@@ -38,6 +41,14 @@ class MainActivity: AppCompatActivity(), ChatView, AuthView {
             }
         })
 
+        sendMessageBtn.setOnClickListener{
+            var message = messageET.text.toString()
+
+            if(message.isNotEmpty()){
+                chatMessagesRepository.send(message)
+                messageET.setText("")
+            }
+        }
         authRepository.attach()
     }
 
