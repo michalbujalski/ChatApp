@@ -16,6 +16,9 @@ class MainActivity: AppCompatActivity(), ChatView, AuthView {
     private var login:MenuItem? = null
     private var logout:MenuItem? = null
     private val fastItemAdapter= FastItemAdapter<ChatMessageItem>()
+    private val authRepository:AuthRepository by lazy{
+        AuthRepositoryImpl(this)
+    }
 
     private val linearLayoutManager:LinearLayoutManager by lazy{
         LinearLayoutManager(this)
@@ -34,10 +37,13 @@ class MainActivity: AppCompatActivity(), ChatView, AuthView {
                         .smoothScrollToPosition(recyclerView, null, fastItemAdapter.itemCount)
             }
         })
+
+        authRepository.attach()
     }
 
 
     override fun onDestroy() {
+        authRepository.detach()
         super.onDestroy()
     }
 
